@@ -170,8 +170,11 @@ def create_archive(
     if stash == "" or stash is None:
         stash = "HEAD"
     # create TAR archive
-    logger.debug(f"Git archive plugin with stash: {stash}")
-    repo.git.archive(stash, "-o", top_tar_file, parameters.plugin_path)
+    # logger.debug(f"Git archive plugin with stash: {stash}")
+    # repo.git.archive(stash, "-o", top_tar_file, parameters.plugin_path)
+    logger.debug(f"Create tar file")
+    with tarfile.open(top_tar_file, mode="w") as tt:
+        tt.add(parameters.plugin_path)
     # adding submodules
     for submodule in repo.submodules:
         _, sub_tar_file = mkstemp(suffix=".tar")
